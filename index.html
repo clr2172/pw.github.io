@@ -5,10 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>World Museum Digitisation</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .carousel-container {
+      position: relative;
+      max-width: 600px;
+      height: 350px;
+      margin: 0 auto 30px;
+      overflow: hidden;
+    }
+    .carousel-slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    .carousel-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white; border: none;
+      font-size: 24px; padding: 8px 12px;
+      cursor: pointer; border-radius: 4px;
+      z-index: 2;
+    }
+    .carousel-arrow:hover { background: rgba(0,0,0,0.7); }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+    .carousel-dots { text-align: center; margin-top: 10px; }
+    .carousel-dot {
+      display: inline-block;
+      width: 12px; height: 12px;
+      margin: 0 5px;
+      background: #bbb;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .carousel-dot.active { background: #005295; }
+  </style>
 </head>
 <body>
   <nav>
-    <a href="#" style="color: white; text-decoration: none;">Home</a>
+    <a href="index.html" style="color: white; text-decoration: none;">Home</a>
     <div class="dropdown">
       <span style="cursor: pointer;">Menu</span>
       <div class="dropdown-content">
@@ -20,8 +63,19 @@
   <header>World Museum Digitisation</header>
 
   <div class="container">
-    <div class="carousel">
-      <img src="images/image1.png" alt="Simple Image Carousel" />
+    <div class="carousel-container">
+      <img src="images/po1.jpg" class="carousel-slide active" alt="Slide 1" />
+      <img src="images/po2.jpg" class="carousel-slide" alt="Slide 2" />
+      <img src="images/h2.jpg"   class="carousel-slide" alt="Slide 3" />
+      <img src="images/f2.jpg"   class="carousel-slide" alt="Slide 4" />
+      <button class="carousel-arrow prev">&#10094;</button>
+      <button class="carousel-arrow next">&#10095;</button>
+    </div>
+    <div class="carousel-dots">
+      <span class="carousel-dot active" data-index="0"></span>
+      <span class="carousel-dot" data-index="1"></span>
+      <span class="carousel-dot" data-index="2"></span>
+      <span class="carousel-dot" data-index="3"></span>
     </div>
 
     <p>Our AI-powered digitisation solution delivers global access, research breakthroughs, and long-term value for every collection.</p>
@@ -44,7 +98,7 @@
 
     <div class="section-title">Invest in Digital Permanence, Not Physical Risk.</div>
     <div class="cost-section">
-      <img src="images/image2.png" alt="Digitisation Cost by Object Type" />
+      <img src="images/image2.jpg" alt="Digitisation Cost by Object Type" />
     </div>
 
     <div class="footer-text">
@@ -56,19 +110,18 @@
     </div>
 
     <div class="table-section">
-      <h2>Why We’re the Right Partner</h2>
+      <h2>Why We're the Right Partner</h2>
       <table>
-        <tr><th>Feature</th><th>💬 Why It’s Better</th></tr>
+        <tr><th>Feature</th><th>💬 Why It's Better</th></tr>
         <tr><td>AI-powered metadata tagging</td><td>Saves time + boosts accuracy compared to manual processes</td></tr>
         <tr><td>Long-term, vendor-agnostic storage</td><td>No vendor lock-in; compatible with multiple cloud systems</td></tr>
-        <tr><td>Modular, scalable design</td><td>Grows with your collections – future-proof investment</td></tr>
+        <tr><td>Modular, scalable design</td><td>Grows with your collections - future-proof investment</td></tr>
         <tr><td>Ethical AI use, explainability</td><td>Transparent decision-making in classification</td></tr>
         <tr><td>Research-backed effectiveness</td><td>Based on 4+ recent studies validating digitisation benefits</td></tr>
       </table>
-
       <h2>Backed by Research</h2>
       <table>
-        <tr><th>📝 Paper</th><th>💬 Why It’s Better</th></tr>
+        <tr><th>📝 Paper</th><th>💬 Why It's Better</th></tr>
         <tr><td>Robillard et al., 2023</td><td>AI reduces errors and improves dataset usability</td></tr>
         <tr><td>Lendemer et al., 2020</td><td>Digitised data improves conservation efforts</td></tr>
         <tr><td>Hedrick et al., 2020</td><td>Open access boosts collaboration across continents</td></tr>
@@ -90,24 +143,40 @@
       <p>Cookie Policy</p>
     </div>
   </footer>
+
   <script>
-    const backToTop = document.createElement('button');
-    backToTop.textContent = '↑ Top';
-    Object.assign(backToTop.style, {
-      position: 'fixed',
-      bottom: '30px',
-      right: '30px',
-      padding: '10px 15px',
-      backgroundColor: '#005295',
-      color: 'white',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      fontSize: '16px',
-      zIndex: '1000'
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dots   = document.querySelectorAll('.carousel-dot');
+      const prev   = document.querySelector('.prev');
+      const next   = document.querySelector('.next');
+      let current = 0, timer;
+
+      function show(n) {
+        slides.forEach((s,i) => {
+          s.classList.toggle('active', i === n);
+          dots[i].classList.toggle('active', i === n);
+        });
+      }
+
+      function nextSlide() { current = (current + 1) % slides.length; show(current); }
+      function prevSlide() { current = (current - 1 + slides.length) % slides.length; show(current); }
+
+      next.addEventListener('click', () => { nextSlide(); resetTimer(); });
+      prev.addEventListener('click', () => { prevSlide(); resetTimer(); });
+      dots.forEach(dot => dot.addEventListener('click', e => {
+        current = parseInt(e.target.dataset.index, 10);
+        show(current);
+        resetTimer();
+      }));
+
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(nextSlide, 3000);
+      }
+
+      timer = setInterval(nextSlide, 3000);
     });
-    backToTop.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
-    document.body.appendChild(backToTop);
   </script>
 </body>
 </html>
