@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>World Museum Digitisation</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav>
+    <a href="#" style="color: white; text-decoration: none;">Home</a>
+    <div class="dropdown">
+      <span style="cursor: pointer;">Menu</span>
+      <div class="dropdown-content">
+        <a href="html/objects.html">Our work on objects</a>
+      </div>
+    </div>
+  </nav>
+
+  <header>World Museum Digitisation</header>
+
+  <div class="container">
+    <div class="carousel">
+      <img src="images/image1.png" alt="Simple Image Carousel" />
+    </div>
+
+    <p>Our AI-powered digitisation solution delivers global access, research breakthroughs, and long-term value for every collection.</p>
+
+    <div class="section-title">Benefits?</div>
+    <div class="benefits">
+      <div class="benefit-box">
+        <h4>🔍 Discoverable by Design</h4>
+        <p>Make every object searchable and accessible with AI-powered metadata and visualization.</p>
+      </div>
+      <div class="benefit-box">
+        <h4>🌍 Access for All</h4>
+        <p>Democratise heritage through digital access for researchers, communities, and the next generation.</p>
+      </div>
+      <div class="benefit-box">
+        <h4>🧬 Science Without Borders</h4>
+        <p>Boost taxonomic research and protect collections by reducing handling with deep learning insights.</p>
+      </div>
+    </div>
+
+    <div class="section-title">Invest in Digital Permanence, Not Physical Risk.</div>
+    <div class="cost-section">
+      <img src="images/image2.png" alt="Digitisation Cost by Object Type" />
+    </div>
+
+    <div class="footer-text">
+      <h4>Why this cost is worth it?</h4>
+      <p>
+        At just $5 million, this is a one-time investment that unlocks permanent global access,
+        research acceleration, and reduced specimen wear — safeguarding cultural legacy for centuries.
+      </p>
+    </div>
+
+    <div class="table-section">
+      <h2>Why We’re the Right Partner</h2>
+      <table>
+        <tr><th>Feature</th><th>💬 Why It’s Better</th></tr>
+        <tr><td>AI-powered metadata tagging</td><td>Saves time + boosts accuracy compared to manual processes</td></tr>
+        <tr><td>Long-term, vendor-agnostic storage</td><td>No vendor lock-in; compatible with multiple cloud systems</td></tr>
+        <tr><td>Modular, scalable design</td><td>Grows with your collections – future-proof investment</td></tr>
+        <tr><td>Ethical AI use, explainability</td><td>Transparent decision-making in classification</td></tr>
+        <tr><td>Research-backed effectiveness</td><td>Based on 4+ recent studies validating digitisation benefits</td></tr>
+      </table>
+
+      <h2>Backed by Research</h2>
+      <table>
+        <tr><th>📝 Paper</th><th>💬 Why It’s Better</th></tr>
+        <tr><td>Robillard et al., 2023</td><td>AI reduces errors and improves dataset usability</td></tr>
+        <tr><td>Lendemer et al., 2020</td><td>Digitised data improves conservation efforts</td></tr>
+        <tr><td>Hedrick et al., 2020</td><td>Open access boosts collaboration across continents</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <footer style="background-color: #003d73; color: white; padding: 30px 20px; display: flex; justify-content: space-between; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 200px;">
+      <h3 style="color: #00ff00;">ENGAGE WITH US</h3>
+      <p>About Us</p>
+      <p>Our Team</p>
+      <p>Contact Us</p>
+    </div>
+    <div style="flex: 1; min-width: 200px;">
+      <h3 style="color: #00ff00;">OUR TERMS</h3>
+      <p>Terms and Conditions</p>
+      <p>Privacy Policy</p>
+      <p>Cookie Policy</p>
+    </div>
+  </footer>
+  <script>
+    const backToTop = document.createElement('button');
+    backToTop.textContent = '↑ Top';
+    Object.assign(backToTop.style, {
+      position: 'fixed',
+      bottom: '30px',
+      right: '30px',
+      padding: '10px 15px',
+      backgroundColor: '#005295',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      fontSize: '16px',
+      zIndex: '1000'
+    });
+    backToTop.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
+    document.body.appendChild(backToTop);
+  </script>
+</body>
+</html>
