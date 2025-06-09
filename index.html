@@ -6,12 +6,58 @@
   <title>World Museum Digitisation</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
+    nav {
+      position: relative;
+      background-color: #00264d;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-weight: 600;
+    }
+    .menu-icon {
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0;
+    }
+    .menu-icon:focus { outline: none; }
+    .side-menu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 20px;
+      background-color: #003d73;
+      list-style: none;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+    .side-menu.active { display: block; }
+    .side-menu li { margin: 8px 0; }
+    .side-menu li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .side-menu li a:hover { text-decoration: underline; }
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    /* 轮播样式 */
     .carousel-container {
       position: relative;
-      max-width: 600px;
+      width: 600px;
       height: 350px;
-      margin: 0 auto 30px;
       overflow: hidden;
+      border-radius: 8px;
+      margin: 0 auto 10px;
     }
     .carousel-slide {
       position: absolute;
@@ -21,23 +67,23 @@
       opacity: 0;
       transition: opacity 0.5s ease-in-out;
     }
-    .carousel-slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
+    .carousel-slide.active { opacity: 1; }
     .carousel-arrow {
       position: absolute;
       top: 50%; transform: translateY(-50%);
       background: rgba(0,0,0,0.5);
       color: white; border: none;
-      font-size: 24px; padding: 8px 12px;
+      font-size: 24px; padding: 8px;
       cursor: pointer; border-radius: 4px;
       z-index: 2;
     }
     .carousel-arrow:hover { background: rgba(0,0,0,0.7); }
     .prev { left: 10px; }
     .next { right: 10px; }
-    .carousel-dots { text-align: center; margin-top: 10px; }
+    .carousel-dots {
+      text-align: center;
+      margin: 10px 0 30px;
+    }
     .carousel-dot {
       display: inline-block;
       width: 12px; height: 12px;
@@ -47,18 +93,34 @@
       cursor: pointer;
     }
     .carousel-dot.active { background: #005295; }
+
+    /* “查看所有对象” 链接样式 */
+    .view-all {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .view-all a {
+      background-color: #005295;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .view-all a:hover {
+      background-color: #003d73;
+    }
   </style>
 </head>
 <body>
   <nav>
-    <a href="index.html" style="color: white; text-decoration: none;">Home</a>
-    <div class="dropdown">
-      <span style="cursor: pointer;">Menu</span>
-      <div class="dropdown-content">
-        <a href="html/objects.html">Our work on objects</a>
-      </div>
-    </div>
+    <button class="menu-icon" aria-label="Open menu">☰</button>
+    <a href="index.html">Home</a>
   </nav>
+  <ul class="side-menu" id="sideMenu">
+    <li><a href="html/objects.html">View all objects</a></li>
+  </ul>
 
   <header>World Museum Digitisation</header>
 
@@ -76,6 +138,10 @@
       <span class="carousel-dot" data-index="1"></span>
       <span class="carousel-dot" data-index="2"></span>
       <span class="carousel-dot" data-index="3"></span>
+    </div>
+
+    <div class="view-all">
+      <a href="html/objects.html">Click me to view all the objects !!</a>
     </div>
 
     <p>Our AI-powered digitisation solution delivers global access, research breakthroughs, and long-term value for every collection.</p>
@@ -158,24 +224,32 @@
           dots[i].classList.toggle('active', i === n);
         });
       }
-
       function nextSlide() { current = (current + 1) % slides.length; show(current); }
       function prevSlide() { current = (current - 1 + slides.length) % slides.length; show(current); }
 
       next.addEventListener('click', () => { nextSlide(); resetTimer(); });
       prev.addEventListener('click', () => { prevSlide(); resetTimer(); });
       dots.forEach(dot => dot.addEventListener('click', e => {
-        current = parseInt(e.target.dataset.index, 10);
-        show(current);
-        resetTimer();
+        current = +e.target.dataset.index;
+        show(current); resetTimer();
       }));
 
       function resetTimer() {
         clearInterval(timer);
         timer = setInterval(nextSlide, 3000);
       }
-
       timer = setInterval(nextSlide, 3000);
+    });
+
+    document.querySelector('.menu-icon').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.toggle('active');
+    });
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('sideMenu');
+      const icon = document.querySelector('.menu-icon');
+      if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('active');
+      }
     });
   </script>
 </body>
