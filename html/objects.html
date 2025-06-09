@@ -5,21 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Our Work on Objects</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    nav {
+      position: relative;
+      background-color: #00264d;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-weight: 600;
+    }
+    .menu-icon {
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0;
+    }
+    .menu-icon:focus { outline: none; }
+    .side-menu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 20px;
+      background-color: #003d73;
+      list-style: none;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+    .side-menu.active { display: block; }
+    .side-menu li { margin: 8px 0; }
+    .side-menu li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .side-menu li a:hover { text-decoration: underline; }
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    .object-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .object-link {
+      display: block;
+      background-color: white;
+      border: 2px solid #005295;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      color: #005295;
+      font-weight: bold;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease-in-out;
+    }
+    .object-link:hover {
+      background-color: #e6f2ff;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    }
+  </style>
 </head>
 <body>
   <nav>
-    <a href="../index.html" style="color: white; text-decoration: none;">Home</a>
-    <div class="dropdown">
-      <span style="cursor: pointer;">Menu</span>
-      <div class="dropdown-content">
-        <a href="objects.html">Our work on objects</a>
-      </div>
-    </div>
+    <button class="menu-icon" aria-label="Open menu">☰</button>
+    <a href="../index.html">Home</a>
   </nav>
+  <ul class="side-menu" id="sideMenu">
+    <li><a href="objects.html">View all objects</a></li>
+  </ul>
 
   <header>Our Work on Objects</header>
   <div class="container">
     <p>Explore how we digitise a wide range of cultural and scientific collections:</p>
+
     <div class="object-grid">
       <a href="paper-based.html" class="object-link">Paper Based Objects</a>
       <a href="assemblages.html" class="object-link">Assemblages</a>
@@ -46,24 +114,18 @@
       <p>Cookie Policy</p>
     </div>
   </footer>
+
   <script>
-    const backToTop = document.createElement('button');
-    backToTop.textContent = '↑ Top';
-    Object.assign(backToTop.style, {
-      position: 'fixed',
-      bottom: '30px',
-      right: '30px',
-      padding: '10px 15px',
-      backgroundColor: '#005295',
-      color: 'white',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      fontSize: '16px',
-      zIndex: '1000'
+    document.querySelector('.menu-icon').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.toggle('active');
     });
-    backToTop.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
-    document.body.appendChild(backToTop);
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('sideMenu'),
+            icon = document.querySelector('.menu-icon');
+      if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('active');
+      }
+    });
   </script>
 </body>
 </html>
